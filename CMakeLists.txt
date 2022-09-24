@@ -58,7 +58,7 @@ endif()
 
 find_library(CRYPTO_LIB NAMES crypto)
 if (NOT CRYPTO_LIB)
-    message(FATAL_ERROR "Fail to find crypto")
+   message(FATAL_ERROR "Fail to find crypto")
 endif()
 
 

@@ -33,9 +33,14 @@ docker build -t ${TARGET} .
 
 2. 启动镜像，比如我们设置端口为 8330，需要将 src/config.h 里面的 IP_PORT 修改为 8330，数据缓存位置设置为 tmp，如有需要可以换到你想要的任意目录下
 ```bash
-SERVER_TMP_DIR=/absolute/path/to/your/tmp/dir
-mkdir ${SERVER_TMP_DIR}
+SERVER_TMP_DIR=/tmp/faiss-data
+mkdir -p ${SERVER_TMP_DIR}
 docker run -itd --runtime nvidia --name brpc_faiss_server -v ${SERVER_TMP_DIR}:/data/saved_rocksdb_faiss -v `pwd`:/opt/brpc_server -p 8330:8330 ${TARGET} /bin/bash
+```
+
+CPU的 机器上运行：
+```
+docker run -itd --name brpc_faiss_server -v ${SERVER_TMP_DIR}:/data/saved_rocksdb_faiss -v `pwd`:/opt/brpc_server -p 8330:8330 ${TARGET} /bin/bash
 ```
 
 3. 启动服务

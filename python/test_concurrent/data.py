@@ -87,10 +87,10 @@ class BigannData1M(object):
 
 if __name__ == "__main__":
     ann_dataset = BigannData1M("./bigann", n_split=3)
-    # cids, fids, features = ann_dataset.get_chunk(0)
-    # print(len(cids))
+    cids, fids, features = ann_dataset.get_chunk(0)
+    print(len(cids))
 
-    # cids, fids, features = ann_dataset.get_query()
-    # gt_ids = ann_dataset.get_groundtruth()
-    #
-    # print(gt_ids)
+    cids, fids, features = ann_dataset.get_query()
+    gt_ids = ann_dataset.get_groundtruth()
+    
+    print(gt_ids)

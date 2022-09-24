@@ -8,7 +8,7 @@
 #include "faiss/IndexFlat.h"
 #include "faiss/IndexIVFFlat.h"
 #include "faiss/IndexIVFPQ.h"
-#include "faiss/AuxIndexStructures.h"
+#include "faiss/impl/AuxIndexStructures.h"
 #include "faiss/MetaIndexes.h"
 
 #include "utils/log.h"

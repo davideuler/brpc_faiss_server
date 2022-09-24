@@ -50,7 +50,7 @@ void FaissIndex::build_index(){
  * http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.111.8125&rep=rep1&type=pdf
  */
 void FaissIndex::online_train_quantizer(const std::vector<float> &x, const int64_t &id){
-    auto &centroids = this->_quantizer->xb;
+    auto &centroids = this->_quantizer->codes;
 
     if (this->_quantizer->ntotal < this->init_n_centroids) {
         this->_quantizer->ntotal += 1;
@@ -106,13 +106,13 @@ void FaissIndex::online_train_quantizer(const std::vector<float> &x, const int64
 
 
 void FaissIndex::shrink_quantizer(){
-    auto &centroids = this->_quantizer->xb;
+    auto &centroids = this->_quantizer->codes;
     std::vector<uint32_t> idx = linalg::argsort(this->centroids_bucket_size, true);
 
     utils::pprint(this->centroids_bucket_size);
     utils::pprint(idx);
 
-    std::vector<float> new_centroids;
+    std::vector<uint8_t> new_centroids;
     for (auto &i:idx) {
         auto start = centroids.begin() + i * this->feature_dim;
         new_centroids.insert(new_centroids.end(), start, start + this->feature_dim);
