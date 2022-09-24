@@ -75,11 +75,13 @@ docker exec brpc_faiss_server /bin/sh -c /opt/brpc_server/start.sh
 > 进行矢量检索：http://xx.xxx.x.xxx:8330/brpc_faiss_server/search
 
 
+具体代码用法参考 python/test_concurrent/index.py.
+测试用数据集下载 sift.tar.gz: http://corpus-texmex.irisa.fr/
 
 增加一个库：
 
 ```python
-import requests
+import requests, json
 url = " http://xx.xxx.x.xxx:8330/brpc_faiss_server/create"
 request_data = {
 	"db_name": "word.emb",
@@ -98,7 +100,7 @@ result = requests.post(url=url, data=request_data)
 查询服务状态：
 
 ```python
-import requests
+import requests, json
 url = " http://xx.xxx.x.xxx:8330/brpc_faiss_server/status"
 request_data = {
 	"db_name": "word.emb",
@@ -112,7 +114,7 @@ result = requests.post(url=url, data=request_data)
 删除某个库：
 
 ```python
-import requests
+import requests, json
 url = " http://xx.xxx.x.xxx:8330/brpc_faiss_server/delete"
 request_data = {
 	"db_name": "word.emb"
@@ -126,7 +128,7 @@ result = requests.post(url=url, data=request_data)
 批量添加：
 
 ```python
-import requests
+import requests,json
 url = " http://xx.xxx.x.xxx:8330/brpc_faiss_server/batch_add"
 data = []
 for cid, fid, feature in list(zip(cids, fids, features)):
@@ -149,7 +151,7 @@ result = requests.post(url=url, data=request_data)
 矢量检索：
 
 ```python
-import requests
+import requests,json
 url = " http://xx.xxx.x.xxx:8330/brpc_faiss_server/search"
 request_data = {
 	"db_name": "word.emb",
