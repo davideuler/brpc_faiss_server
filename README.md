@@ -31,6 +31,11 @@ TARGET=brpc_faiss_server:v1
 docker build -t ${TARGET} .
 ```
 
+Build for CPU:
+```
+docker build -f Centos.Dockerfile -t brpc_faiss_server:v1 .
+```
+
 2. 启动镜像，比如我们设置端口为 8330，需要将 src/config.h 里面的 IP_PORT 修改为 8330，数据缓存位置设置为 tmp，如有需要可以换到你想要的任意目录下
 ```bash
 SERVER_TMP_DIR=/tmp/faiss-data
@@ -49,7 +54,11 @@ docker run -itd --name brpc_faiss_server -v ${SERVER_TMP_DIR}:/data/saved_rocksd
 docker exec brpc_faiss_server /bin/sh -c /opt/brpc_server/start.sh
 ```
 
+如果需要调试, exec 进入到容器中运行命令：
 
+```
+docker exec -it brpc_faiss_server /bin/bash
+```
 
 ## 使用服务
 

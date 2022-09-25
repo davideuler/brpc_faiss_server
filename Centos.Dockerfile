@@ -35,7 +35,7 @@ RUN wget --no-check-certificate https://mirrors.tuna.tsinghua.edu.cn/anaconda/ar
     && conda update -y pip \
     && conda install -y cython swig \
     && conda clean -y -a \
-    && rm -rf /opt/anaconda3-2022.sh && pip uninstall -y protobuf  && rm -rf /opt/conda/include/google 
+    && rm -rf /opt/anaconda3-2022.sh && conda uninstall -y protobuf  && rm -rf /opt/conda/include/google 
     
 # ENV PATH=/opt/conda/bin:$PATH
 # ENV CPATH=/usr/include:$CPATH
@@ -82,8 +82,9 @@ RUN wget https://github.com/facebookresearch/faiss/archive/v1.7.2.tar.gz -O /opt
     && make -C build -j "$(nproc)" faiss  \
     && make -C build -j "$(nproc)" swigfaiss  \
     && make -C build install \
-    && (cd build/faiss/python && python setup.py build && python3 -m pip install -e .) \
-    && cp /opt/faiss/build/* /opt/third_party/faiss/ \
+    # && (cd build/faiss/python && python setup.py build && python3 -m pip install -e .) \
+    && cp -r /opt/faiss/build/* /opt/third_party/faiss/ \
+    && mkdir -p /opt/third_party/faiss/lib/ \
     && cp /opt/faiss/build/lib64/libfaiss.so /opt/third_party/faiss/lib/ \
     && cd /opt 
     #&& rm -rf /opt/faiss*
@@ -97,7 +98,7 @@ RUN wget https://github.com/facebook/rocksdb/archive/refs/tags/v6.29.3.tar.gz -O
     && tar -xvzf /opt/rocksdb.tar \
     && tar -xvzf /opt/zstd.tar \
     && cd /opt/zstd-1.5.2 \
-    && make \
+    && make -j "$(nproc)" \
     && make install \
     && cd /opt/rocksdb-6.29.3 \
     && make shared_lib -j "$(nproc)" \
